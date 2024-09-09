@@ -226,7 +226,7 @@ function isPrime(n) {
   }
   return true;
 }
-console.log(isPrime(2));
+// console.log(isPrime(2));
 
 /**
  * Tries to convert value to number and returns it if conversion was successful;
