@@ -1,3 +1,8 @@
+/* eslint-disable default-case */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable radix */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-param-reassign */
 /* eslint-disable operator-linebreak */
 /* eslint-disable for-direction */
 /* eslint-disable no-plusplus */
@@ -224,8 +229,12 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  isStartIncluded === true ? (isStartIncluded = '[') : (isStartIncluded = '(');
+  isEndIncluded === true ? (isEndIncluded = ']') : (isEndIncluded = ')');
+  return b < a
+    ? `${isStartIncluded}${b}, ${a}${isEndIncluded}`
+    : `${isStartIncluded}${a}, ${b}${isEndIncluded}`;
 }
 
 /**
@@ -240,8 +249,13 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  const arr = str.split('');
+  const res = [];
+  for (let i = arr.length; i >= 0; i--) {
+    res.push(arr[i]);
+  }
+  return res.join('');
 }
 
 /**
@@ -256,8 +270,13 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  const arr = num.toString().split('');
+  const res = [];
+  for (let i = arr.length; i >= 0; i--) {
+    res.push(arr[i]);
+  }
+  return +res.join('');
 }
 
 /**
@@ -280,8 +299,18 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  let sum = 0;
+  const card = ccn.split('').map(Number);
+  for (const [index, num] of card.entries()) {
+    if (index % 2 === 0) {
+      const temp = num * 2;
+      temp > 9 ? (sum += temp - 9) : (sum += temp);
+    } else {
+      sum += num;
+    }
+  }
+  return sum % 10 === 0;
 }
 
 /**
@@ -298,8 +327,16 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  let newRes;
+  let res = num.toString().split('');
+  res = res.reduce((a, b) => +a + +b);
+  if (res > 9) {
+    res = res.toString().split('');
+    newRes = res.reduce((a, b) => +a + +b);
+    return newRes;
+  }
+  return res;
 }
 
 /**
@@ -323,8 +360,42 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const stack = [];
+
+  for (let i = 0; i < str.length; i++) {
+    const x = str[i];
+
+    if (x === '(' || x === '[' || x === '{' || x === '<') {
+      stack.push(x);
+    }
+
+    if (stack.length === 0) return false;
+
+    let check;
+    switch (x) {
+      case ')':
+        check = stack.pop();
+        if (check === '{' || check === '[' || check === '<') return false;
+        break;
+
+      case '}':
+        check = stack.pop();
+        if (check === '(' || check === '[' || check === '<') return false;
+        break;
+
+      case ']':
+        check = stack.pop();
+        if (check === '(' || check === '{' || check === '<') return false;
+        break;
+      case '>':
+        check = stack.pop();
+        if (check === '(' || check === '{' || check === '[') return false;
+        break;
+    }
+  }
+
+  return stack.length === 0;
 }
 
 /**
