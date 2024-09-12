@@ -1,3 +1,6 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable default-case */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable radix */
@@ -301,9 +304,9 @@ function reverseInteger(num) {
  */
 function isCreditCardNumber(ccn) {
   let sum = 0;
-  const card = ccn.split('').map(Number);
+  const card = ccn.toString().split('').map(Number).reverse();
   for (const [index, num] of card.entries()) {
-    if (index % 2 === 0) {
+    if (index % 2 === 1) {
       const temp = num * 2;
       temp > 9 ? (sum += temp - 9) : (sum += temp);
     } else {
@@ -312,6 +315,7 @@ function isCreditCardNumber(ccn) {
   }
   return sum % 10 === 0;
 }
+// console.log(isCreditCardNumber(4916123456789012));
 
 /**
  * Returns the digital root of integer:
@@ -418,10 +422,10 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
-
+// console.log(toNaryString(1024, 2));
 /**
  * Returns the common directory path for specified array of full filenames.
  *
@@ -434,10 +438,26 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const tempPathes = pathes.map((el) => el.split('/'));
+  const min = Math.min(...tempPathes.map((path) => path.length));
+  const mainPath = [];
+  for (let i = 0; i < min; i++) {
+    const directory = tempPathes[0][i];
+    if (tempPathes.every((path) => path[i] === directory)) {
+      mainPath.push(directory);
+    }
+  }
+  if (mainPath.length === 0) {
+    return '';
+  }
+  const res = mainPath.join('/');
+  return res.endsWith('/') ? ` ${res}` : `${res}/`;
 }
 
+// console.log(
+//   getCommonDirectoryPath(['/web/assets/style.css', '/.bin/mocha', '/read.me'])
+// );
 /**
  * Returns the product of two specified matrixes.
  * See details: https://en.wikipedia.org/wiki/Matrix_multiplication
@@ -456,9 +476,22 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const res = Array.from({ length: m1.length }, () =>
+    Array(m2[0].length).fill(0)
+  );
+  if (m1[0].length === m2.length) {
+    for (let i = 0; i < m1.length; i++) {
+      for (let j = 0; j < m2[0].length; j++) {
+        for (let k = 0; k < m1[0].length; k++) {
+          res[i][j] += m1[i][k] * m2[k][j];
+        }
+      }
+    }
+  }
+  return res;
 }
+// console.log(getMatrixProduct([[1, 2, 3]], [[4], [5], [6]]));
 
 /**
  * Returns the evaluation of the specified tic-tac-toe position.

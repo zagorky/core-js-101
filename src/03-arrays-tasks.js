@@ -1,3 +1,6 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-else-return */
 /* eslint-disable comma-dangle */
 /* eslint-disable implicit-arrow-linebreak */
@@ -462,9 +465,25 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => {
+    if (a.country === b.country) {
+      return a.city > b.city ? 1 : -1;
+    }
+    return a.country > b.country ? 1 : -1;
+  });
 }
+
+// console.log(
+//   sortCitiesArray([
+//     { country: 'Russia', city: 'Moscow' },
+//     { country: 'Belarus', city: 'Minsk' },
+//     { country: 'Poland', city: 'Warsaw' },
+//     { country: 'Russia', city: 'Saint Petersburg' },
+//     { country: 'Poland', city: 'Krakow' },
+//     { country: 'Belarus', city: 'Brest' },
+//   ])
+// );
 
 /**
  * Creates an identity matrix of the specified size
@@ -484,9 +503,10 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return [...Array(n)].map((elem, index, arr) => arr.map((elem) => +!index--));
 }
+// console.log(getIdentityMatrix(5));
 
 /**
  * Creates an array of integers from the specified start to end (inclusive)
@@ -501,10 +521,10 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  return new Array(end - start + 1).fill().map((_, i) => start + i);
 }
-
+// console.log(getIntervalArray(-2, 10));
 /**
  * Returns array containing only unique values from the specified array.
  *
@@ -516,9 +536,12 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  const array = Array.from(new Set(arr));
+  return array;
 }
+// const arr = [1, 1, 2, 2, 3, 3, 4, 4];
+// console.log(distinct(arr));
 
 /**
  * Groups elements of the specified array by key.
@@ -567,8 +590,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.flatMap(childrenSelector);
 }
 
 /**
