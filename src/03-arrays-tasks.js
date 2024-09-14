@@ -296,8 +296,8 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  return arr.map((el, i) => Array(i + 1).fill(el)).flat();
 }
 
 /**
@@ -573,10 +573,34 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
-}
+function group(array, keySelector, valueSelector) {
+  const result = array.reduce((map, item) => {
+    const key = keySelector(item);
+    const value = valueSelector(item);
 
+    if (!map.has(key)) {
+      map.set(key, []);
+    }
+
+    map.get(key).push(value);
+    return map;
+  }, new Map());
+  return result;
+}
+// console.log(
+//   group(
+//     [
+//       { country: 'Belarus', city: 'Brest' },
+//       { country: 'Russia', city: 'Omsk' },
+//       { country: 'Russia', city: 'Samara' },
+//       { country: 'Belarus', city: 'Grodno' },
+//       { country: 'Belarus', city: 'Minsk' },
+//       { country: 'Poland', city: 'Lodz' },
+//     ],
+//     (item) => item.country,
+//     (item) => item.city
+//   )
+// );
 /**
  * Projects each element of the specified array to a sequence
  * and flattens the resulting sequences into one array.

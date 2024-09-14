@@ -206,10 +206,21 @@ function isInsideCircle(circle, point) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
-}
+function findFirstSingleChar(str) {
+  const charCount = {};
+  for (const char of str) {
+    charCount[char] = (charCount[char] || 0) + 1;
+  }
+  // console.log(charCount);
 
+  for (const char of str) {
+    if (charCount[char] === 1) {
+      return char;
+    }
+  }
+  return null;
+}
+// console.log(findFirstSingleChar('The quick brown fox jumps over the lazy dog'));
 /**
  * Returns the string representation of math interval,
  * specified by two points and include / exclude flags.
@@ -523,8 +534,42 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  for (let i = 0; i < 3; i++) {
+    if (
+      position[i][0] === position[i][1] &&
+      position[i][1] === position[i][2] &&
+      position[i][0] !== undefined
+    ) {
+      return position[i][0];
+    }
+  }
+  for (let i = 0; i < 3; i++) {
+    if (
+      position[0][i] === position[1][i] &&
+      position[1][i] === position[2][i] &&
+      position[0][i] !== undefined
+    ) {
+      return position[0][i];
+    }
+  }
+
+  if (
+    position[0][0] === position[1][1] &&
+    position[1][1] === position[2][2] &&
+    position[0][0] !== undefined
+  ) {
+    return position[0][0];
+  }
+
+  if (
+    position[0][2] === position[1][1] &&
+    position[1][1] === position[2][0] &&
+    position[0][2] !== undefined
+  ) {
+    return position[0][2];
+  }
+  return undefined;
 }
 
 module.exports = {
